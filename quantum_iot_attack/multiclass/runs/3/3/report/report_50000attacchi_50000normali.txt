@@ -1,0 +1,18 @@
+              precision    recall  f1-score   support
+
+           0       0.34      0.14      0.20     50000
+           1       0.46      0.73      0.57     50000
+
+    accuracy                           0.44    100000
+   macro avg       0.40      0.44      0.38    100000
+weighted avg       0.40      0.44      0.38    100000
+tempo normale: 0.013778924942016602
+              precision    recall  f1-score   support
+
+           0       0.34      0.14      0.20     50000
+           1       0.46      0.73      0.57     50000
+
+    accuracy                           0.44    100000
+   macro avg       0.40      0.44      0.38    100000
+weighted avg       0.40      0.44      0.38    100000
+tempo quantum: 0.12470388412475586
