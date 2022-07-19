@@ -1,0 +1,5 @@
+# Directory
+data/
+__pycache__/
+
+configuration.py

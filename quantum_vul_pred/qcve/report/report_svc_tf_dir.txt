@@ -1,0 +1,18 @@
+              precision    recall  f1-score   support
+
+          -1       0.92      0.65      0.76     18281
+           1       0.94      0.99      0.96    100067
+
+    accuracy                           0.94    118348
+   macro avg       0.93      0.82      0.86    118348
+weighted avg       0.94      0.94      0.93    118348
+tempo normale training: 8976.013432664004
+              precision    recall  f1-score   support
+
+          -1       0.81      0.43      0.56      4571
+           1       0.90      0.98      0.94     25017
+
+    accuracy                           0.90     29588
+   macro avg       0.86      0.71      0.75     29588
+weighted avg       0.89      0.90      0.88     29588
+tempo normale testing: 620.4935023319995

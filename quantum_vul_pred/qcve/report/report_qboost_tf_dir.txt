@@ -1,0 +1,18 @@
+              precision    recall  f1-score   support
+
+          -1       0.48      0.47      0.48     18281
+           1       0.90      0.91      0.91    100067
+
+    accuracy                           0.84    118348
+   macro avg       0.69      0.69      0.69    118348
+weighted avg       0.84      0.84      0.84    118348
+tempo qboost training: 4.396996526993462
+              precision    recall  f1-score   support
+
+          -1       0.48      0.48      0.48      4571
+           1       0.91      0.91      0.91     25017
+
+    accuracy                           0.84     29588
+   macro avg       0.69      0.69      0.69     29588
+weighted avg       0.84      0.84      0.84     29588
+tempo qboost testing: 0.2719050039886497

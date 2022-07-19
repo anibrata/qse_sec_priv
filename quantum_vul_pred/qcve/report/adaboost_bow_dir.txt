@@ -1,0 +1,18 @@
+              precision    recall  f1-score   support
+
+          -1       0.74      0.44      0.55     18281
+           1       0.90      0.97      0.94    100067
+
+    accuracy                           0.89    118348
+   macro avg       0.82      0.71      0.74    118348
+weighted avg       0.88      0.89      0.88    118348
+Time performance for train dataset: 17.0390553100151
+              precision    recall  f1-score   support
+
+          -1       0.74      0.44      0.56      4571
+           1       0.91      0.97      0.94     25017
+
+    accuracy                           0.89     29588
+   macro avg       0.82      0.71      0.75     29588
+weighted avg       0.88      0.89      0.88     29588
+Time performance for test dataset: 0.6271437969990075
