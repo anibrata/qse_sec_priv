@@ -358,8 +358,9 @@ def cve_quantum_classifier(x_train, x_test, y_train, y_test):
     qboost = QBoostClassifier(n_estimators=NUM_WEAK_CLASSIFIERS, max_depth=TREE_DEPTH)
     qboost.fit(x_train, y_train, emb_sampler, lmd=lmd, **DW_PARAMS)
     end_train = timer()
-    print(f'QBoost training time in seconds: {(end - start)}')
     train_time = (end_train - start_train)
+    print(f'QBoost training time in seconds: {(end_train - start_train)}')
+
 
     ####################################
     # Predict accuracy on training set #
