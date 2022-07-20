@@ -168,10 +168,11 @@ def cve_random_forest_classifier(x_train, x_test, y_train, y_test):
     ##########################################################
     # -------------TRAIN With Random Forest  -----------------
 
-    leaf_depth = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+    #leaf_depth = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+    leaf_depth=[0]
     for leaf in leaf_depth:
         start = timer()
-        clf_RF = RandomForestClassifier(max_depth=leaf, random_state=0)
+        clf_RF = RandomForestClassifier(max_depth=None, random_state=0)
         clf_RF.fit(x_train, y_train)
         end = timer()
         train_time = end - start
@@ -284,7 +285,8 @@ def cve_adaoost_classifier(x_train, x_test, y_train, y_test):
     # Create Adaboost model and fit it on training data #
     #####################################################
     # -------------TRAIN CON ADABOOST DECOMMENTARE E COMMENTARE SVC
-    nest = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    #nest = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    nest = [50]
     for num in nest:
         start = timer()
         clf_AB = AdaBoostClassifier(base_estimator=None, n_estimators=num, algorithm='SAMME.R', random_state=None)
@@ -385,8 +387,7 @@ def cve_quantum_classifier(x_train, x_test, y_train, y_test):
     with open('quantum_vul_pred/cve_predict/report/report_QBoost_' + dataset + '.txt', 'a') as f:
         f.write('QBoost Training Set \n')
         f.write(report)
-        f.write('tempo qboost training: ' + str(tempo) + '\n')
-        f.write('Qboost Training Set Prediction Time (' + str(nest) + '):' + str(train_set_pred_time) + '\n')
+        f.write('Qboost Training Set Prediction Time :' + str(train_set_pred_time) + '\n')
     f.close()
     print("saved...")
 
@@ -403,7 +404,7 @@ def cve_quantum_classifier(x_train, x_test, y_train, y_test):
     with open('quantum_vul_pred/cve_predict/report/report_QBoost_' + dataset + '.txt', 'a') as f:
         f.write('QBoost Test Set \n')
         f.write(report)
-        f.write('Qboost Training Set Prediction Time (' + str(nest) + '):' + str(test_set_pred_time) + '\n')
+        f.write('Qboost Training Set Prediction Time :' + str(test_set_pred_time) + '\n')
     f.close()
     print("saved...")
 
@@ -501,6 +502,6 @@ if __name__ == "__main__":
     cve_quantum_classifier(x_train, x_test, y_train, y_test)
     cve_random_forest_classifier(x_train, x_test, y_train, y_test)
     cve_adaoost_classifier(x_train, x_test, y_train, y_test)
-    cve_svc_classifier(x_train, x_test, y_train, y_test)
+    #cve_svc_classifier(x_train, x_test, y_train, y_test)
 
     print("************** PROGRAM END **************")

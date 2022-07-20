@@ -90,7 +90,7 @@ Prepare dataset for proper dataframe and machine learning
 
 def prepare_dataset_for_ml(dir):
     nvd_filepath = "quantum_vul_pred/cve_predict/data/cves/cves.csv"
-    exploits_filepath = "quantum_vul_pred/cve_predict//data/exploits/cves_exploits.csv"
+    exploits_filepath = "quantum_vul_pred/cve_predict/data/exploits/cves_exploits.csv"
 
     nvd_df = pd.read_csv(nvd_filepath, sep=";")
     nvd_df.drop(["pub_date", "description", "references", "cwe"], axis=1, inplace=True)
@@ -162,13 +162,13 @@ def conv_label(y_data):
 '''
 
 
-def cve_random_forest_classifier(x_train, x_test, y_train, y_test):
+def cve_random_forest_classifier(x_train, x_test, y_train, y_test, dataset):
     ##########################################################
     # Create Random Forest model and fit it on training data #
     ##########################################################
     # -------------TRAIN With Random Forest  -----------------
 
-    #leaf_depth = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+    # leaf_depth = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
     leaf_depth = [10]
     for leaf in leaf_depth:
         start = timer()
@@ -223,7 +223,7 @@ def cve_random_forest_classifier(x_train, x_test, y_train, y_test):
         print("Saved...")
 
 
-def cve_svc_classifier(x_train, x_test, y_train, y_test):
+def cve_svc_classifier(x_train, x_test, y_train, y_test, dataset):
     ################################################
     # Create SVC model and fit it on training data #
     ################################################
@@ -280,12 +280,12 @@ def cve_svc_classifier(x_train, x_test, y_train, y_test):
     print("saved...")
 
 
-def cve_adaoost_classifier(x_train, x_test, y_train, y_test):
+def cve_adaoost_classifier(x_train, x_test, y_train, y_test, dataset):
     #####################################################
     # Create Adaboost model and fit it on training data #
     #####################################################
     # -------------TRAIN CON ADABOOST DECOMMENTARE E COMMENTARE SVC
-    #nest = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    # nest = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     nest = [50]
     for num in nest:
         start = timer()
@@ -333,7 +333,7 @@ def cve_adaoost_classifier(x_train, x_test, y_train, y_test):
         print("Saved...")
 
 
-def cve_quantum_classifier(x_train, x_test, y_train, y_test):
+def cve_quantum_classifier(x_train, x_test, y_train, y_test, dataset):
     ##########################
     # Define Quantum sampler #
     ##########################
@@ -381,13 +381,13 @@ def cve_quantum_classifier(x_train, x_test, y_train, y_test):
     start = timer()
     predictions = qboost.predict(x_train)
     end = timer()
-    train_set_pred_time=(end - start)
+    train_set_pred_time = (end - start)
     report = classification_report(y_train, predictions)
     # report/report.txt
     with open('quantum_vul_pred/cve_predict/report/report_QBoost_' + dataset + '.txt', 'a') as f:
         f.write('QBoost Training Set \n')
         f.write(report)
-        f.write('Qboost Training Set Prediction Time (' + str(nest) + '):' + str(train_set_pred_time) + '\n')
+        f.write('Qboost Training Set Prediction Time :' + str(train_set_pred_time) + '\n')
     f.close()
     print("saved...")
 
@@ -404,7 +404,7 @@ def cve_quantum_classifier(x_train, x_test, y_train, y_test):
     with open('quantum_vul_pred/cve_predict/report/report_QBoost_' + dataset + '.txt', 'a') as f:
         f.write('QBoost Test Set \n')
         f.write(report)
-        f.write('Qboost Training Set Prediction Time (' + str(nest) + '):' + str(test_set_pred_time) + '\n')
+        f.write('Qboost Training Set Prediction Time :' + str(test_set_pred_time) + '\n')
     f.close()
     print("saved...")
 
@@ -417,10 +417,10 @@ if __name__ == "__main__":
     # We are working here only with tfidf_df for now      #
     #######################################################
 
-    for dataset in ['bow','tf','tfidf']:
+    for dataset in ['bow', 'tf', 'tfidf']:
 
-        dir = dataset+'_dir'
-        dir = "quantum_vul_pred/cve_predict/data/features/" + str(dataset)
+        dir = dataset + '_dir'
+        dir = 'quantum_vul_pred/cve_predict/data/features/' + dataset
 
         if not os.path.exists(os.path.join(dir, "data.npz")):
             print("Missing file with " + dataset + " values")
@@ -437,13 +437,13 @@ if __name__ == "__main__":
         '''
         print('Cols :', bow_df.columns)
         print('bow_df :\n', bow_df)
-    
+
         print('Cols :', tf_df.columns)
         print('tf_df :\n', tf_df)
-    
+
         print('Cols :', tfidf_df.columns)
         print('tfidf_df :\n', tfidf_df)
-    
+
         print('Inizio la creazione dei csv')
         bow_df.to_csv(r'bow_df.csv', index=False, header=True)
         print('finito bow_df')
@@ -481,9 +481,8 @@ if __name__ == "__main__":
         # Convert DEPENDENT variable into values 1/-1 #
         ###############################################
 
-        #y_train = transform_dependent_values(y_train)
-        #y_test = transform_dependent_values(y_test)
-
+        # y_train = transform_dependent_values(y_train)
+        # y_test = transform_dependent_values(y_test)
 
         # print(X)
         # print(y)
@@ -494,9 +493,9 @@ if __name__ == "__main__":
         #
         # exit()
 
-        cve_quantum_classifier(x_train, x_test, y_train, y_test)
-        cve_random_forest_classifier(x_train, x_test, y_train, y_test)
-        cve_adaoost_classifier(x_train, x_test, y_train, y_test)
-        #cve_svc_classifier(x_train, x_test, y_train, y_test)
+        cve_quantum_classifier(x_train, x_test, y_train, y_test, dataset)
+        cve_random_forest_classifier(x_train, x_test, y_train, y_test, dataset)
+        cve_adaoost_classifier(x_train, x_test, y_train, y_test, dataset)
+        # cve_svc_classifier(x_train, x_test, y_train, y_test)
 
         print("************** PROGRAM END **************")
