@@ -169,19 +169,19 @@ def cve_random_forest_classifier(x_train, x_test, y_train, y_test):
     # -------------TRAIN With Random Forest  -----------------
 
     leaf_depth = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
-    for i in leaf_depth:
+    for leaf in leaf_depth:
         start = timer()
-        clf_RF = RandomForestClassifier(max_depth=i, random_state=0)
+        clf_RF = RandomForestClassifier(max_depth=leaf, random_state=0)
         clf_RF.fit(x_train, y_train)
         end = timer()
-        tempo_normal = end - start
+        train_time = end - start
         with open('quantum_vul_pred/cve_predict/report/report_RF_' + dataset + '.txt', 'a') as f:
             f.write('\n')
-            f.write('################  Random Forest : Max Depth :' + str(leaf_depth) + ' #####################' + '\n')
-            f.write('Random Forest Training Time :' + str(tempo_normal) + '\n')
+            f.write('################  Random Forest : Max Depth :' + str(leaf) + ' #####################' + '\n')
+            f.write('Random Forest Training Time :' + str(train_time) + '\n')
             f.write('\n')
         f.close()
-        print("Random Forest Training Time :", tempo_normal)
+        print("Random Forest Training Time :", train_time)
 
         # RANDOM FOREST
         ####################################
@@ -197,7 +197,7 @@ def cve_random_forest_classifier(x_train, x_test, y_train, y_test):
         with open('quantum_vul_pred/cve_predict/report/report_RF_' + dataset + '.txt', 'a') as f:
             f.write('Random Forest Training Set \n')
             f.write(report)
-            f.write('Training Set Prediction Time(' + str(leaf_depth) + '):' + str(train_set_pred_time) + '\n')
+            f.write('Training Set Prediction Time(' + str(leaf) + '):' + str(train_set_pred_time) + '\n')
             f.write('\n')
         f.close()
         print("Saved...")
@@ -215,7 +215,7 @@ def cve_random_forest_classifier(x_train, x_test, y_train, y_test):
         with open('quantum_vul_pred/cve_predict/report/report_RF_' + dataset + '.txt', 'a') as f:
             f.write('Random Forest Test Set \n')
             f.write(report)
-            f.write('Test Set Prediction Time (' + str(leaf_depth) + '):' + str(test_set_pred_time) + '\n')
+            f.write('Test Set Prediction Time (' + str(leaf) + '):' + str(test_set_pred_time) + '\n')
             f.write('\n')
             f.write('###################################################################################### \n')
         f.close()
@@ -233,12 +233,17 @@ def cve_svc_classifier(x_train, x_test, y_train, y_test):
     # Normal / SVC
     print("Training Normal/SVC ...")
     clf_svc = make_pipeline(StandardScaler(with_mean=False), SVC(gamma='auto'))
-    start = time.time()
+    start = timer()
     clf_svc.fit(x_train, y_train)
-    end = time.time()
-
-    tempo_normal = end - start
-    print("SVC Training Time :", tempo_normal)
+    end = timer()
+    svc_training_time = end - start
+    print("SVC Training Time :", svc_training_time)
+    with open('quantum_vul_pred/cve_predict/report/report_SVC_' + dataset + '.txt', 'a') as f:
+        f.write('\n')
+        f.write('################  SVC #####################' + '\n')
+        f.write('SVC Training Time :' + str(svc_training_time) + '\n')
+        f.write('\n')
+    f.close()
 
     # SVC
     ####################################
@@ -248,12 +253,12 @@ def cve_svc_classifier(x_train, x_test, y_train, y_test):
     start = timer()
     predictions = clf_svc.predict(x_train)
     end = timer()
-    tempo_normal = end - start
+    train_set_pred_time = end - start
     print("Reporting...")
     report = classification_report(y_train, predictions)
     with open('quantum_vul_pred/cve_predict/report/report_SVC_' + dataset + '.txt', 'a') as f:
         f.write(report)
-        f.write('SVC Prediction Training Set: ' + str(tempo_normal) + '\n')
+        f.write('SVC Prediction Training Set: ' + str(train_set_pred_time) + '\n')
     f.close()
     print("saved...")
 
@@ -264,12 +269,12 @@ def cve_svc_classifier(x_train, x_test, y_train, y_test):
     start = timer()
     predictions = clf_svc.predict(x_test)
     end = timer()
-    tempo_normal = end - start
+    test_set_pred_time = end - start
     print("Reporting...")
     report = classification_report(y_test, predictions)
     with open('quantum_vul_pred/cve_predict/report/report_SVC_' + dataset + '.txt', 'a') as f:
         f.write(report)
-        f.write('SVC Prediction Test Set:' + str(tempo_normal) + '\n')
+        f.write('SVC Prediction Test Set:' + str(test_set_pred_time) + '\n')
     f.close()
     print("saved...")
 
@@ -280,9 +285,9 @@ def cve_adaoost_classifier(x_train, x_test, y_train, y_test):
     #####################################################
     # -------------TRAIN CON ADABOOST DECOMMENTARE E COMMENTARE SVC
     nest = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    for i in nest:
+    for num in nest:
         start = timer()
-        clf_AB = AdaBoostClassifier(base_estimator=None, n_estimators=nest, algorithm='SAMME.R', random_state=None)
+        clf_AB = AdaBoostClassifier(base_estimator=None, n_estimators=num, algorithm='SAMME.R', random_state=None)
         clf_AB.fit(x_train, y_train)
         end = timer()
         tempo_normal = end - start
@@ -302,7 +307,7 @@ def cve_adaoost_classifier(x_train, x_test, y_train, y_test):
         with open('quantum_vul_pred/cve_predict/report/report_Adaboost_' + dataset + '.txt', 'a') as f:
             f.write('Adaboost Training Set \n')
             f.write(report)
-            f.write('Adaboost Training Set Prediction Time (' + str(nest) + '):' + str(train_set_pred_time) + '\n')
+            f.write('Adaboost Training Set Prediction Time (' + str(num) + '):' + str(train_set_pred_time) + '\n')
             f.write('\n')
         f.close()
         print("Saved...")
@@ -320,7 +325,7 @@ def cve_adaoost_classifier(x_train, x_test, y_train, y_test):
         with open('quantum_vul_pred/cve_predict/report/report_Adaboost_' + dataset + '.txt', 'a') as f:
             f.write('Adaboost Test Set \n')
             f.write(report)
-            f.write('Adaboost Test Set Prediction Time (' + str(nest) + '):' + str(test_set_pred_time) + '\n')
+            f.write('Adaboost Test Set Prediction Time (' + str(num) + '):' + str(test_set_pred_time) + '\n')
             f.write('\n')
         f.close()
         print("Saved...")
@@ -358,9 +363,14 @@ def cve_quantum_classifier(x_train, x_test, y_train, y_test):
     qboost = QBoostClassifier(n_estimators=NUM_WEAK_CLASSIFIERS, max_depth=TREE_DEPTH)
     qboost.fit(x_train, y_train, emb_sampler, lmd=lmd, **DW_PARAMS)
     end_train = timer()
-    train_time = (end_train - start_train)
-    print(f'QBoost training time in seconds: {(end_train - start_train)}')
-
+    qboost_train_time = (end_train - start_train)
+    print('QBoost training time in seconds: ', qboost_train_time)
+    with open('quantum_vul_pred/cve_predict/report/report_QBoost_' + dataset + '.txt', 'a') as f:
+        f.write('\n')
+        f.write('################  QBoost #####################' + '\n')
+        f.write('Qboost Training Time :' + str(qboost_train_time) + '\n')
+        f.write('\n')
+    f.close()
 
     ####################################
     # Predict accuracy on training set #
@@ -451,7 +461,7 @@ if __name__ == "__main__":
     #######################################
 
     print('Creating the list of columns without the DEPENDENT variable... ')
-    print(choosen)
+    #print(choosen)
     choosen['EDB_exploitable'] = choosen['EDB_exploitable'].astype(int)
 
     result_label = conv_label(choosen['EDB_exploitable'])
