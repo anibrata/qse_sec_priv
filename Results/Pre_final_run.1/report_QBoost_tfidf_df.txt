@@ -1,0 +1,24 @@
+
+################  QBoost #####################
+Qboost Training Time :4.286521404981613
+
+QBoost Training Set 
+              precision    recall  f1-score   support
+
+          -1       0.48      0.47      0.48     18281
+           1       0.90      0.91      0.91    100067
+
+    accuracy                           0.84    118348
+   macro avg       0.69      0.69      0.69    118348
+weighted avg       0.84      0.84      0.84    118348
+Qboost Training Set Prediction Time:0.8068785379873589
+QBoost Test Set 
+              precision    recall  f1-score   support
+
+          -1       0.48      0.48      0.48      4571
+           1       0.91      0.91      0.91     25017
+
+    accuracy                           0.84     29588
+   macro avg       0.69      0.69      0.69     29588
+weighted avg       0.84      0.84      0.84     29588
+Qboost Test Set Prediction Time :0.4814877070020884

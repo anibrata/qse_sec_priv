@@ -1,0 +1,25 @@
+Adaboost Training Set 
+Adaboost Training Time (50):43.96955378400162
+
+Adaboost Training Set 
+              precision    recall  f1-score   support
+
+          -1       0.73      0.45      0.56     18281
+           1       0.91      0.97      0.94    100067
+
+    accuracy                           0.89    118348
+   macro avg       0.82      0.71      0.75    118348
+weighted avg       0.88      0.89      0.88    118348
+Adaboost Training Set Prediction Time (50):1.9150643409811892
+
+Adaboost Test Set 
+              precision    recall  f1-score   support
+
+          -1       0.73      0.46      0.56      4571
+           1       0.91      0.97      0.94     25017
+
+    accuracy                           0.89     29588
+   macro avg       0.82      0.71      0.75     29588
+weighted avg       0.88      0.89      0.88     29588
+Adaboost Test Set Prediction Time (50):0.4849037060048431
+

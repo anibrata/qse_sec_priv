@@ -1,0 +1,27 @@
+
+################  Random Forest : Max Depth :30 #####################
+Random Forest Training Time :126.98033956700237
+
+Random Forest Training Set 
+              precision    recall  f1-score   support
+
+          -1       0.99      0.65      0.78     18281
+           1       0.94      1.00      0.97    100067
+
+    accuracy                           0.94    118348
+   macro avg       0.96      0.82      0.87    118348
+weighted avg       0.95      0.94      0.94    118348
+Training Set Prediction Time(30):3.2997396900318563
+
+Random Forest Test Set 
+              precision    recall  f1-score   support
+
+          -1       0.83      0.44      0.58      4571
+           1       0.91      0.98      0.94     25017
+
+    accuracy                           0.90     29588
+   macro avg       0.87      0.71      0.76     29588
+weighted avg       0.89      0.90      0.89     29588
+Test Set Prediction Time (30):0.9061780089978129
+
+###################################################################################### 

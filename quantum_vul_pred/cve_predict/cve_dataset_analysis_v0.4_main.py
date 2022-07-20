@@ -385,7 +385,6 @@ def cve_quantum_classifier(x_train, x_test, y_train, y_test):
     with open('quantum_vul_pred/cve_predict/report/report_QBoost_' + dataset + '.txt', 'a') as f:
         f.write('QBoost Training Set \n')
         f.write(report)
-        f.write('tempo qboost training: ' + str(tempo) + '\n')
         f.write('Qboost Training Set Prediction Time (' + str(nest) + '):' + str(train_set_pred_time) + '\n')
     f.close()
     print("saved...")
@@ -412,96 +411,90 @@ def cve_quantum_classifier(x_train, x_test, y_train, y_test):
 #           Main program section      #
 #######################################
 if __name__ == "__main__":
-    bow_dir = "quantum_vul_pred/cve_predict/data/features/bow/"
-    tf_dir = "quantum_vul_pred/cve_predict/data/features/tf/"
-    tfidf_dir = "quantum_vul_pred/cve_predict/data/features/tfidf/"
-    if not os.path.exists(os.path.join(bow_dir, "data.npz")):
-        print("Missing file with BoW values")
-        exit(1)
-    if not os.path.exists(os.path.join(tf_dir, "data.npz")):
-        print("Missing file with TF values")
-        exit(1)
-    if not os.path.exists(os.path.join(tfidf_dir, "data.npz")):
-        print("Missing file with TF-IDF values")
-        exit(1)
-
     #######################################################
     # We are working here only with tfidf_df for now      #
     #######################################################
 
-    #bow_df = prepare_dataset_for_ml(bow_dir)
-    tf_df = prepare_dataset_for_ml(tf_dir)
-    #tfidf_df = prepare_dataset_for_ml(tfidf_dir)
+    for dataset in ['bow','tf','tfidf']:
 
-    '''
-    print('Cols :', bow_df.columns)
-    print('bow_df :\n', bow_df)
+        dir = dataset+'_dir'
+        dir = "quantum_vul_pred/cve_predict/data/features/" + str(dataset)
 
-    print('Cols :', tf_df.columns)
-    print('tf_df :\n', tf_df)
+        if not os.path.exists(os.path.join(dir, "data.npz")):
+            print("Missing file with " + dataset + " values")
+            exit(1)
 
-    print('Cols :', tfidf_df.columns)
-    print('tfidf_df :\n', tfidf_df)
+        dataset = dataset + '_df'
 
-    print('Inizio la creazione dei csv')
-    bow_df.to_csv(r'bow_df.csv', index=False, header=True)
-    print('finito bow_df')
-    tf_df.to_csv(r'tf_df.csv', index=False, header=True)
-    print('finito td_df_df')
-    tfidf_df.to_csv(r'tfidf_df.csv', index=False, header=True)
-    print('finito tfidf_df_df')
-    '''
+        dataset = prepare_dataset_for_ml(dir)
 
-    # percentage of dataset for TEST,0
-    percentage = 0.20
-    dataset = "tf_df"
-    choosen = tf_df
+        # percentage of dataset for TEST,0
+        percentage = 0.20
+        choosen = dataset
 
-    #######################################
-    # Removing label from dataset columns #
-    #######################################
+        '''
+        print('Cols :', bow_df.columns)
+        print('bow_df :\n', bow_df)
+    
+        print('Cols :', tf_df.columns)
+        print('tf_df :\n', tf_df)
+    
+        print('Cols :', tfidf_df.columns)
+        print('tfidf_df :\n', tfidf_df)
+    
+        print('Inizio la creazione dei csv')
+        bow_df.to_csv(r'bow_df.csv', index=False, header=True)
+        print('finito bow_df')
+        tf_df.to_csv(r'tf_df.csv', index=False, header=True)
+        print('finito td_df_df')
+        tfidf_df.to_csv(r'tfidf_df.csv', index=False, header=True)
+        print('finito tfidf_df_df')
+        '''
 
-    print('Creating the list of columns without the DEPENDENT variable... ')
-    #print(choosen)
-    choosen['EDB_exploitable'] = choosen['EDB_exploitable'].astype(int)
+        #######################################
+        # Removing label from dataset columns #
+        #######################################
 
-    result_label = conv_label(choosen['EDB_exploitable'])
-    choosen['EDB_exploitable'] = result_label
-    del result_label
+        print('Creating the list of columns without the DEPENDENT variable... ')
+        choosen['EDB_exploitable'] = choosen['EDB_exploitable'].astype(int)
 
-    ###############################################
-    # Split columns for Training and Test dataset #
-    ###############################################
+        result_label = conv_label(choosen['EDB_exploitable'])
+        choosen['EDB_exploitable'] = result_label
+        del result_label
 
-    X = choosen.drop(['EDB_exploitable'], axis=1)
-    y = choosen['EDB_exploitable']
+        ###############################################
+        # Split columns for Training and Test dataset #
+        ###############################################
 
-    print('Splitting dataset into Training and Testing sets')
+        X = choosen.drop(['EDB_exploitable'], axis=1)
+        y = choosen['EDB_exploitable']
 
-    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=percentage, random_state=42, stratify=y)
+        print('Splitting dataset into Training and Testing sets')
 
-    print('Done splitting')
+        x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=percentage, random_state=42, stratify=y)
 
-    ###############################################
-    # Convert DEPENDENT variable into values 1/-1 #
-    ###############################################
+        print('Done splitting')
 
-    #y_train = transform_dependent_values(y_train)
-    #y_test = transform_dependent_values(y_test)
+        ###############################################
+        # Convert DEPENDENT variable into values 1/-1 #
+        ###############################################
+
+        #y_train = transform_dependent_values(y_train)
+        #y_test = transform_dependent_values(y_test)
 
 
-    # print(X)
-    # print(y)
-    # print(x_train)
-    # print(x_test)
-    # print(y_train)
-    # print(y_test)
-    #
-    # exit()
+        # print(X)
+        # print(y)
+        # print(x_train)
+        # print(x_test)
+        # print(y_train)
+        # print(y_test)
+        #
+        # exit()
 
-    cve_quantum_classifier(x_train, x_test, y_train, y_test)
-    cve_random_forest_classifier(x_train, x_test, y_train, y_test)
-    cve_adaoost_classifier(x_train, x_test, y_train, y_test)
-    cve_svc_classifier(x_train, x_test, y_train, y_test)
+        cve_quantum_classifier(x_train, x_test, y_train, y_test)
+        cve_random_forest_classifier(x_train, x_test, y_train, y_test)
+        cve_adaoost_classifier(x_train, x_test, y_train, y_test)
+        #cve_svc_classifier(x_train, x_test, y_train, y_test)
 
-    print("************** PROGRAM END **************")
+        print("************** PROGRAM END **************")
